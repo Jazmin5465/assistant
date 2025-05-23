@@ -3,6 +3,24 @@ import time
 
 client = OpenAI()
 
+def process_run(thread_id, assistant_id):
+    new_run = client.beta.threads.runs.create(
+    thread_id = thread_id,
+    assistant_id = assistant_id
+    )
+
+    while True:
+        time.sleep(1)
+        print("Thinking...")
+
+        run_check = client.beta.threads.runs.retrieve(
+        thread_id = thread_id,
+        run_id = new_run.id
+        )
+
+        if(run_check.status in ["cancelled", "failed", "expired", "completed"]):
+            return run_check
+
 assistant = client.beta.assistants.create(
     name = "Study Buddy",
     model = "gpt-3.5-turbo",
@@ -12,34 +30,27 @@ assistant = client.beta.assistants.create(
 
 thread = client.beta.threads.create()
 
-user_input = input("You: ")
-
-message = client.beta.threads.messages.create(
-    thread_id = thread.id,
-    role = "user",
-    content = user_input
-)
-
-run = client.beta.threads.runs.create(
-    thread_id = thread.id,
-    assistant_id = assistant.id
-)
+print("Study buddy: I'm here to assist you! Type 'exit' to exit at any time.")
+user_input = ""
 
 while True:
-    time.sleep(1)
+    user_input = input("You: ")
+    if user_input.lower() == "exit":
+        print("\nAssistant: Goodbye!\n")
+        exit()
 
-    run = client.beta.threads.runs.retrieve(
-    thread_id = thread.id,
-    run_id = run.id
+    message = client.beta.threads.messages.create(
+        thread_id = thread.id,
+        role = "user",
+        content = user_input
     )
 
-    if(run.status == "completed"):
-        break
+    run = process_run(thread.id, assistant.id)
 
-message_thread = client.beta.threads.messages.list(
-    thread_id = thread.id
-)
-
-message_for_user = message_thread.data[0].content[0].text.value
-
-print("\nAssistant: "+message_for_user+"\n")
+    if run.status == "completed":
+        message_thread = client.beta.threads.messages.list(
+            thread_id = thread.id
+        )
+        print("\nAssistant: " + message_thread.data[0].content[0].text.value + "\n")
+    else:
+        print("\nAssistant: An error has occured, please try again.\n")
