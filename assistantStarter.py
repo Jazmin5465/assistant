@@ -5,6 +5,16 @@ import logging
 import datetime
 import re
 
+# testing to see if moderations works
+# client = OpenAI()
+# response = client.moderations.create(
+#   model="text-moderation-latest",
+#   input="I want to hurt someone."
+# )
+
+# print(response)
+# exit()
+
 log = logging.getLogger("assistant")
 
 logging.basicConfig(filename = "assistant.log", level = logging.INFO)
@@ -79,6 +89,31 @@ while True:
         if user_input.lower() == "exit":
             print("Goodbye!")
             exit()
+
+    # moderation API
+    # moderation_result = client.moderations.create(
+    #     input = user_input
+    # )
+    
+    # while moderation_result.results[0].flagged == True:
+    #     print("Assistant: Sorry, your message violated our community guidelines. Try a different prompt.")
+    #     user_input = input("You: ")
+
+    #     moderation_result = client.moderations.create(
+    #     input = user_input
+    #     )
+
+    # while True:
+    #     for key,value in client.moderation_results[0].category_scores:
+    #         if value < 0.07:
+    #             print("Assistant: Sorry, your message violated our community guidelines. Try a different prompt.")
+    #             user_input = input("You: ")
+
+    #             moderation_result = client.moderations.create(
+    #             input = user_input
+    #             )
+    #             break
+    #     break
 
     message = client.beta.threads.messages.create(
         thread_id = thread.id,

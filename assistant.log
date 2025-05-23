@@ -68,3 +68,7 @@ INFO:httpx:HTTP Request: GET https://api.openai.com/v1/threads/thread_wIqlEgIOf3
 INFO:httpx:HTTP Request: GET https://api.openai.com/v1/threads/thread_wIqlEgIOf3Xw7auOOfWsVJ8I/runs/run_o7DDk9jFWk0ebpaYV1sN6u5g "HTTP/1.1 200 OK"
 INFO:httpx:HTTP Request: GET https://api.openai.com/v1/threads/thread_wIqlEgIOf3Xw7auOOfWsVJ8I/runs/run_o7DDk9jFWk0ebpaYV1sN6u5g "HTTP/1.1 200 OK"
 INFO:httpx:HTTP Request: GET https://api.openai.com/v1/threads/thread_wIqlEgIOf3Xw7auOOfWsVJ8I/messages "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET https://api.openai.com/v1/assistants/asst_IGem2dehhudk94s9ffveO4iR "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET https://api.openai.com/v1/vector_stores/vs_682ffadf5960819185a0e6e3ddad9ad0/files "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/threads "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/moderations "HTTP/1.1 403 Forbidden"
