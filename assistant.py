@@ -3,6 +3,13 @@ import time
 
 client = OpenAI()
 
+# curriculum_knowledge = client.files.create(
+#     file = open("knowledge/OpenAIChatCompletionsAPICheatsheet.pdf", "rb"),
+#     purpose = "assistants"
+# )
+
+# print(curriculum_knowledge)
+
 def process_run(thread_id, assistant_id):
     new_run = client.beta.threads.runs.create(
     thread_id = thread_id,
@@ -25,7 +32,9 @@ assistant = client.beta.assistants.create(
     name = "Study Buddy",
     model = "gpt-3.5-turbo",
     instructions = "You are a helpful study buddy.",
-    tools = []
+    tools = [{
+        "type": "file_search"
+    }]
 )
 
 thread = client.beta.threads.create()
